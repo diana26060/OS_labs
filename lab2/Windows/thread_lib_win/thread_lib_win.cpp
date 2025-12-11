@@ -65,7 +65,6 @@ public:
         int numBlocks = (N + k - 1) / k;
         int totalThreads = numBlocks * numBlocks;
 
-        // Защита от слишком большого количества потоков
         if (totalThreads > 10000) {
             std::cout << "Block size " << k << " would create " << totalThreads
                 << " threads - skipping (too many threads)" << std::endl;
@@ -111,12 +110,10 @@ int main() {
 
     MatrixMultiplier multiplier(N);
 
-    // Sequential multiplication
     multiplier.sequentialMultiply();
 
     std::cout << "\nParallel multiplication with different block sizes:" << std::endl;
 
-    // Test different block sizes 
     std::vector<int> blockSizes = { 50, 100, 125, 250, 500 };
 
     for (int k : blockSizes) {

@@ -6,7 +6,7 @@
 
 using namespace std;
 
-const int MAX_THREADS = 64; // Максимальное количество потоков для WaitForMultipleObjects
+const int MAX_THREADS = 64; 
 
 class MatrixMultiplier {
 private:
@@ -21,7 +21,6 @@ private:
 
 public:
     MatrixMultiplier(int size) : N(size) {
-        // Инициализируем матрицы с правильными размерами
         A.resize(N);
         B.resize(N);
         C.resize(N);
@@ -44,9 +43,8 @@ public:
     }
 
     void multiplyBlock(int startRow, int endRow, int startCol, int endCol) {
-        // Проверяем границы
         if (startRow < 0 || endRow > N || startCol < 0 || endCol > N) {
-            std::cout << "Invalid block boundaries!" << endl;
+            std::cout << "invalid block boundaries" << endl;
             return;
         }
 
@@ -54,7 +52,6 @@ public:
             for (int j = startCol; j < endCol; j++) {
                 int sum = 0;
                 for (int k = 0; k < N; k++) {
-                    // Проверяем границы перед доступом
                     if (i < A.size() && k < A[i].size() && k < B.size() && j < B[k].size()) {
                         sum += A[i][k] * B[k][j];
                     }
@@ -106,7 +103,6 @@ public:
         vector<HANDLE> threads;
         threads.reserve(totalThreads);
 
-        // Создаем потоки
         for (int i = 0; i < numBlocks; i++) {
             for (int j = 0; j < numBlocks; j++) {
                 ThreadData* data = new ThreadData();
@@ -116,7 +112,6 @@ public:
                 data->startCol = j * blockSize;
                 data->endCol = min((j + 1) * blockSize, N);
 
-                // Проверяем границы блока
                 if (data->startRow >= N || data->startCol >= N) {
                     delete data;
                     continue;
@@ -141,13 +136,10 @@ public:
             }
         }
 
-        // Ждем завершения потоков группами по MAX_THREADS
         for (size_t i = 0; i < threads.size(); i += MAX_THREADS) {
             DWORD count = min(threads.size() - i, MAX_THREADS);
             WaitForMultipleObjects(count, &threads[i], TRUE, INFINITE);
         }
-
-        // Закрываем handles
         for (HANDLE thread : threads) {
             CloseHandle(thread);
         }
@@ -158,20 +150,18 @@ public:
 };
 
 int main() {
-    cout << "=== Windows Matrix Multiplication ===" << endl;
+    cout << " Windows Matrix Multiplication " << endl;
 
-    // Начнем с маленькой матрицы для тестирования
     int matrixSize = 10;
     cout << "Matrix size: " << matrixSize << "x" << matrixSize << endl << endl;
 
     MatrixMultiplier multiplier(matrixSize);
 
-    // Последовательное умножение
     multiplier.sequentialMultiply();
 
     cout << endl << "Parallel multiplication:" << endl;
 
-    // Тестируем разные размеры блоков
+   
     int blockSizes[] = { 5, 2, 1 };
 
     for (int blockSize : blockSizes) {
@@ -181,7 +171,7 @@ int main() {
         }
     }
 
-    cout << endl << "Program completed successfully!" << endl;
+    cout << endl << "program completed successfully" << endl;
     system("pause");
     return 0;
 }
