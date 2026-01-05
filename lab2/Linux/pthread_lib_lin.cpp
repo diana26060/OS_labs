@@ -79,7 +79,6 @@ public:
         int numBlocks = (N + k - 1) / k;
         int totalThreads = numBlocks * numBlocks;
         
-        // Защита от слишком большого количества потоков
         if (totalThreads > 1000) {
             std::cout << "Block size " << k << " would create " << totalThreads 
                       << " threads - skipping (too many threads)" << std::endl;
@@ -127,11 +126,9 @@ public:
         return true;
     }
 
-    // Метод для проверки корректности умножения
     bool verifyMultiplication() {
         std::vector<std::vector<int>> reference(N, std::vector<int>(N, 0));
         
-        // Вычисляем эталонный результат последовательно
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
                 int sum = 0;
@@ -142,7 +139,6 @@ public:
             }
         }
 
-        // Сравниваем с параллельным результатом
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
                 if (C[i][j] != reference[i][j]) {
@@ -155,27 +151,20 @@ public:
         return true;
     }
 
-    // Метод для тестирования всех размеров блоков
     void testAllBlockSizes() {
         std::cout << "\nTesting parallel multiplication with different block sizes:" << std::endl;
         std::cout << "Matrix size: " << N << "x" << N << std::endl;
-        std::cout << "==============================================" << std::endl;
+        std::cout << " " << std::endl;
         
-        // Тестируем разные размеры блоков
         std::vector<int> blockSizes;
         
-        // Добавляем размеры блоков от больших к маленьким
         for (int k = N; k >= 50; k -= 50) {
             if (k > 0) blockSizes.push_back(k);
         }
         
-        // Добавляем некоторые конкретные размеры
         blockSizes.insert(blockSizes.end(), {25, 20, 10, 5, 2, 1});
-        
-        // Сортируем по убыванию для лучшего визуального представления
         std::sort(blockSizes.rbegin(), blockSizes.rend());
         
-        // Удаляем дубликаты
         blockSizes.erase(std::unique(blockSizes.begin(), blockSizes.end()), blockSizes.end());
         
         for (int k : blockSizes) {
@@ -185,7 +174,6 @@ public:
                     continue;
                 }
                 
-                // Проверяем корректность для небольшой матрицы
                 if (N <= 100) {
                     if (!testMultiplier.verifyMultiplication()) {
                         std::cout << "ERROR: Multiplication verification failed for block size " << k << std::endl;
@@ -197,9 +185,7 @@ public:
 };
 
 int main() {
-    std::cout << "=== Matrix Multiplication Benchmark (Linux pthread) ===" << std::endl;
-    
-    // Тестируем с разными размерами матриц
+    std::cout << " Matrix multiplication" << std::endl;
     std::vector<int> matrixSizes = {100, 200, 500};
     
     for (int N : matrixSizes) {
@@ -208,15 +194,12 @@ int main() {
         std::cout << std::string(60, '=') << std::endl;
         
         PthreadMatrixMultiplier multiplier(N);
-        
-        // Последовательное умножение для сравнения
+
         std::cout << "Sequential multiplication:" << std::endl;
         multiplier.sequentialMultiply();
         
-        // Параллельное умножение с разными размерами блоков
         multiplier.testAllBlockSizes();
         
-        // Проверяем корректность для последнего запуска
         if (N <= 100) {
             std::cout << "\nVerifying multiplication correctness..." << std::endl;
             if (multiplier.verifyMultiplication()) {
@@ -228,6 +211,6 @@ int main() {
     }
     
     std::cout << "\n" << std::string(60, '=') << std::endl;
-    std::cout << "Benchmark completed!" << std::endl;
+    std::cout << "Benchmark completed" << std::endl;
     return 0;
 }
