@@ -1,0 +1,7 @@
+﻿  windows_pipes.cpp
+C:\Users\Lenovo\source\repos\github\OS_3sem\lab5\windows_pipes.cpp(35,53): warning C4267: аргумент: преобразование из "size_t" в "DWORD"; возможна потеря данных
+C:\Users\Lenovo\source\repos\github\OS_3sem\lab5\windows_pipes.cpp(68,53): warning C4267: аргумент: преобразование из "size_t" в "DWORD"; возможна потеря данных
+C:\Users\Lenovo\source\repos\github\OS_3sem\lab5\windows_pipes.cpp(101,53): warning C4267: аргумент: преобразование из "size_t" в "DWORD"; возможна потеря данных
+C:\Users\Lenovo\source\repos\github\OS_3sem\lab5\windows_pipes.cpp(135,53): warning C4267: аргумент: преобразование из "size_t" в "DWORD"; возможна потеря данных
+C:\Users\Lenovo\source\repos\github\OS_3sem\lab5\windows_pipes.cpp(223,51): warning C4267: аргумент: преобразование из "size_t" в "DWORD"; возможна потеря данных
+  lab5.vcxproj -> C:\Users\Lenovo\source\repos\github\OS_3sem\lab5\x64\Debug\lab5.exe
