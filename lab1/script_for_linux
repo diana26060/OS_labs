@@ -1,0 +1,12 @@
+rm -f *.o *.a *.so
+g++ -c Number.cpp -o Number.o
+g++ -c Vector.cpp -o Vector.o
+g++ -c Main.cpp -o Main.o
+
+ar rcs libNumber.a Number.o
+ar rcs libVector.a Vector.o
+
+g++ -shared -fPIC Number.o -o libNumber.so
+g++ -shared -fPIC Vector.o -o libVector.so
+
+ls -l *.o *.a *.so
